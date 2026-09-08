@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #FAF9F6;
+  --color-charcoal: #2D2A26;
+  --color-ink: #3A2E2A;
+  --color-purple-accent: #B45309;
+  --color-purple-soft: #fef3c7;
+  --color-gold: #C9A86A;
+  --color-gold-soft: #fef3c7;
+  --font-display: "Syne", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-serif: "Cormorant Garamond", serif;
+}
+
+* { font-family: var(--font-body); }
+html { scroll-behavior: smooth; }
+body { background: var(--color-cream); color: var(--color-charcoal); -webkit-font-smoothing: antialiased; }
+
+/* Editorial display utilities */
+.font-display { font-family: var(--font-display); letter-spacing: -0.04em; line-height: 0.9; }
+.font-serif { font-family: var(--font-serif); }
+
+/* Smooth focus */
+*:focus-visible { outline: 2px solid var(--color-purple-accent); outline-offset: 2px; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Subtle hairline */
+.hairline { border-color: rgba(26,26,26,0.08); }
