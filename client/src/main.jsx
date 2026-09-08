@@ -4,6 +4,7 @@ import './index.css'
 import App from './App.jsx'
 import { Provider } from 'react-redux'
 import store from './features/store.js'
+import './utils/axiosConfig.js'
 
 // Suppress noisy external extension errors (e.g. mobx-state-tree / performance observer startTime)
 // These come from browser extensions (VM* / sw.js), not from app code. In production they don't appear.
