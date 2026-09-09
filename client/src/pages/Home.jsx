@@ -638,22 +638,7 @@ function Home() {
         </section>
       </Reveal>
 
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-[var(--color-gold)] to-amber-700"></div>
-        <div className="absolute inset-0 bg-gray-900 opacity-10"></div>
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
-            Fashion that fits your digital twin
-          </h2>
-          <p className="text-xl text-amber-50 mb-8">
-            Join thousands of shoppers who have already discovered the future of
-            fashion
-          </p>
-          <button className="bg-white text-amber-600 px-10 py-4 rounded-full font-bold text-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
-            Create Free Account
-          </button>
-        </div>
-      </section>
+
     </div>
   );
 }

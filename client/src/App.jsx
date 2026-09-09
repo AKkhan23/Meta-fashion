@@ -26,6 +26,7 @@ import PrivateAdminComponent from "./components/PrivateAdminComponent"
 import CartBtn from "./components/CartBtn"
 import Profile from "./pages/Profile"
 import PrivateComponent from "./components/PrivateComponent"
+import PublicOnly from "./components/PublicOnly"
 import NotFound from "./pages/PageNotFound"
 
 
@@ -34,24 +35,25 @@ const App = () => {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/collections" element={<AllProducts />} />
+        <Route element={<PublicOnly />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
 
-        <Route path="/collections/:pid" element={<ProductPage />} />
+        <Route element={<PrivateComponent />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/collections" element={<AllProducts />} />
+          <Route path="/collections/:pid" element={<ProductPage />} />
         {/* 3D Avatar System — COMMENTED for now */}
         {/* <Route path="/view3d/:pid" element={<View3D />} /> */}
         {/* <Route path="/avatar-try" element={<AvatarTryOn />} /> */}
 
-        <Route path="/auth" element={<PrivateComponent />}>
           <Route path="cart" element={<Cart />} />
           <Route path="profile" element={<Profile />} />
         </Route>
-        {/* Alias for direct /cart access - redirects to private route */}
-        <Route path="/cart" element={<Navigate to="/auth/cart" replace />} />
+        <Route path="/auth/cart" element={<Navigate to="/cart" replace />} />
 
         <Route path="/admin" element={<PrivateAdminComponent />}>
           <Route path="dashboard" element={<Dashboard />} />
