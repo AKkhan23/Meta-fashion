@@ -41,6 +41,16 @@ const Profile = () => {
             navigate("/login")
         } else {
             dispatch(getMyOrders())
+            // Force sync credits from DB (fixes stale localStorage 4 -> real 1)
+            import('../features/auth/authService').then(({ default: authService }) => {
+                authService.getMe(user.token).then(fresh => {
+                    if (fresh.credits !== user.credits) {
+                        const updated = { ...user, credits: fresh.credits }
+                        localStorage.setItem('user', JSON.stringify(updated))
+                        window.location.reload()
+                    }
+                }).catch(()=>{})
+            })
         }
     }, [user?._id, dispatch])
 

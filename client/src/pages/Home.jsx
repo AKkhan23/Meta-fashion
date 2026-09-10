@@ -34,399 +34,46 @@ function Home() {
     REFERENCE MATCHED EDITORIAL LAYOUT
 ========================================================= */}
 
-      <section
-        className="
-    relative
-    w-full
-    overflow-hidden
-    bg-[#E8E1D9]
-  "
-        style={{
-          height: "780px",
-          minHeight: "780px",
-        }}
-      >
-        {/* =====================================================
-      FULL WIDTH IMAGE
-      IMAGE IS THE BACKGROUND / VISUAL CANVAS
-  ===================================================== */}
+      <section className="relative w-full overflow-hidden bg-[#E8E1D9]" style={{ height: "780px", minHeight: "780px" }}>
+        {/* DESKTOP IMAGE — unchanged */}
+        <img src={HeroCutout} alt="Meta Fashion editorial model" className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none select-none" style={{ objectFit: "contain", objectPosition: "center 42%", zIndex: 1, filter: "contrast(1.04) saturate(1.05) brightness(1.02)" }} fetchPriority="high" decoding="async" />
+        {/* MOBILE IMAGE — with soft shadow to blend bg */}
+        <img src={HeroCutout} alt="Meta Fashion editorial model" className="lg:hidden absolute inset-0 w-full h-full pointer-events-none select-none" style={{ objectFit: "contain", objectPosition: "center 38%", zIndex: 1, filter: "drop-shadow(0 12px 24px rgba(41,39,37,0.12)) contrast(1.04) saturate(1.05)" }} fetchPriority="high" decoding="async" />
 
-        <img
-          src={HeroCutout}
-          alt="Meta Fashion editorial model"
-          className="
-      absolute
-      inset-0
-      w-full
-      h-full
-      pointer-events-none
-      select-none
-    "
-          style={{
-            objectFit: "contain",
-            objectPosition: "center 42%",
-            zIndex: 1,
-            transform: "translateX(0)",
-            imageRendering: "auto",
-            filter: "contrast(1.04) saturate(1.05) brightness(1.02)",
-          }}
-          fetchPriority="high"
-          decoding="async"
-        />
-
-        {/* =====================================================
-      EDITORIAL CONTENT LAYER
-  ===================================================== */}
-
-        <div
-          className="
-      absolute
-      inset-0
-      w-full
-      h-full
-      mx-auto
-      overflow-hidden
-    "
-        >
-          {/* ===================================================
-        ELEVATE
-        REFERENCE: LARGE TOP-LEFT
-    =================================================== */}
-
-          <div
-            className="
-        absolute
-        whitespace-nowrap
-        select-none
-        text-charcoal
-        pointer-events-none
-      "
-            style={{
-              left: "10%",
-              top: "9%",
-              fontFamily: "Arial, Helvetica, sans-serif",
-              fontSize: "clamp(96px, 7.7vw, 140px)",
-              fontWeight: 900,
-              lineHeight: "0.78",
-              letterSpacing: "-0.075em",
-              zIndex: 0,
-            }}
-          >
-            ELEVATE
+        {/* ================= DESKTOP HERO — EXACT, UNCHANGED ================= */}
+        <div className="hidden lg:block absolute inset-0 w-full h-full mx-auto overflow-hidden">
+          <div className="absolute whitespace-nowrap select-none text-charcoal pointer-events-none" style={{ left: "10%", top: "9%", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "clamp(96px, 7.7vw, 140px)", fontWeight: 900, lineHeight: "0.78", letterSpacing: "-0.075em", zIndex: 0 }}>ELEVATE</div>
+          <div className="absolute whitespace-nowrap select-none text-charcoal pointer-events-none" style={{ left: "10%", top: "32%", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "clamp(96px, 7.7vw, 140px)", fontWeight: 900, lineHeight: "0.78", letterSpacing: "-0.075em", zIndex: 3 }}>BRANDS</div>
+          <div className="absolute text-charcoal" style={{ right: "8%", top: "28%", width: "370px", zIndex: 20 }}>
+            <p className="m-0" style={{ fontFamily: "Arial, Helvetica, sans-serif", fontSize: "15px", fontWeight: 400, lineHeight: "1.55", letterSpacing: "0", color: "#292725" }}>Creating impactful brand experiences through innovative design and strategic thinking, helping businesses stand out and thrive in today's competitive landscape.</p>
           </div>
-
-          {/* ===================================================
-        BRANDS
-        REFERENCE: LEFT / MIDDLE
-    =================================================== */}
-
-          <div
-            className="
-        absolute
-        whitespace-nowrap
-        select-none
-        text-charcoal
-        pointer-events-none
-      "
-            style={{
-              left: "10%",
-              top: "32%",
-              fontFamily: "Arial, Helvetica, sans-serif",
-              fontSize: "clamp(96px, 7.7vw, 140px)",
-              fontWeight: 900,
-              lineHeight: "0.78",
-              letterSpacing: "-0.075em",
-              zIndex: 3,
-            }}
-          >
-            BRANDS
+          <div className="absolute flex items-center justify-between" style={{ right: "8%", top: "56%", width: "370px", zIndex: 20 }}>
+            <span style={{ fontFamily: "Arial, Helvetica, sans-serif", fontSize: "11px", fontWeight: 400, letterSpacing: "0.17em", color: "#292725" }}>SINCE 2014</span>
+            <span style={{ fontFamily: "Arial, Helvetica, sans-serif", fontSize: "11px", fontWeight: 400, letterSpacing: "0.17em", color: "#292725" }}>+123 123 1234</span>
           </div>
-
-          {/* ===================================================
-        RIGHT DESCRIPTION
-        REFERENCE: UPPER / RIGHT
-    =================================================== */}
-
-          <div
-            className="
-        absolute
-        text-charcoal
-      "
-            style={{
-              right: "8%",
-              top: "28%",
-              width: "370px",
-              zIndex: 20,
-            }}
-          >
-            <p
-              className="m-0"
-              style={{
-                fontFamily: "Arial, Helvetica, sans-serif",
-                fontSize: "15px",
-                fontWeight: 400,
-                lineHeight: "1.55",
-                letterSpacing: "0",
-                color: "#292725",
-              }}
-            >
-              Creating impactful brand experiences through innovative design and
-              strategic thinking, helping businesses stand out and thrive in
-              today's competitive landscape.
-            </p>
+          <div className="absolute whitespace-nowrap select-none text-charcoal pointer-events-none" style={{ right: "15%", bottom: "23%", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "clamp(100px, 8vw, 145px)", fontWeight: 900, lineHeight: "0.76", letterSpacing: "-0.075em", zIndex: 1 }}>TODAY</div>
+          <div className="absolute left-[6%] top-[75%] -translate-y-1/2 w-[88px] h-[88px] flex items-center justify-center bg-white/40 backdrop-blur rounded-full border border-charcoal/10 shadow-sm" style={{ zIndex: 25 }}>
+            <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full" aria-hidden="true"><defs><path id="finalHeroCircle" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" /></defs><text style={{ fill: "#292725", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "6.3px", letterSpacing: "0.18em", opacity: 0.52 }}><textPath href="#finalHeroCircle" startOffset="0%">1234 SINCE 2014 1234 SINCE 2014</textPath></text></svg>
+            <span className="relative text-charcoal" style={{ fontFamily: "Arial, Helvetica, sans-serif", fontSize: "21px", fontWeight: 300 }}>↓</span>
           </div>
+        </div>
 
-          {/* ===================================================
-        SINCE 2014 / PHONE
-        REFERENCE: BELOW DESCRIPTION
-    =================================================== */}
-
-          <div
-            className="
-        absolute
-        flex
-        items-center
-        justify-between
-      "
-            style={{
-              right: "8%",
-              top: "56%",
-              width: "370px",
-              zIndex: 20,
-            }}
-          >
-            <span
-              style={{
-                fontFamily: "Arial, Helvetica, sans-serif",
-                fontSize: "11px",
-                fontWeight: 400,
-                letterSpacing: "0.17em",
-                color: "#292725",
-              }}
-            >
-              SINCE 2014
-            </span>
-
-            <span
-              style={{
-                fontFamily: "Arial, Helvetica, sans-serif",
-                fontSize: "11px",
-                fontWeight: 400,
-                letterSpacing: "0.17em",
-                color: "#292725",
-              }}
-            >
-              +123 123 1234
-            </span>
+        {/* MOBILE ELEVATE — ELE left, V under face, ATE right visible */}
+        <div className="lg:hidden absolute whitespace-nowrap select-none text-charcoal pointer-events-none" style={{ left: "2%", top: "13%", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "clamp(62px, 20vw, 86px)", fontWeight: 900, lineHeight: "0.78", letterSpacing: "-0.065em", zIndex: 0, transform: "translateX(2%)" }}>ELEVATE</div>
+        {/* MOBILE HERO — REST (in front of model) */}
+        <div className="lg:hidden relative w-full" style={{ minHeight: "720px", zIndex: 1 }}>
+          <div className="absolute whitespace-nowrap select-none left-1/2 -translate-x-1/2" style={{ top: "24.5%", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "clamp(58px, 18vw, 78px)", fontWeight: 900, lineHeight: "0.78", letterSpacing: "-0.075em", zIndex: 5, color: "rgba(245,241,232,0.85)", textShadow: "0 2px 20px rgba(0,0,0,0.15)" }}>BRANDS</div>
+          <div className="absolute" style={{ left: "6%", right: "6%", top: "54%", zIndex: 20 }}>
+            <p className="m-0 text-charcoal" style={{ maxWidth: "310px", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "12px", fontWeight: 400, lineHeight: "1.55" }}>Creating impactful brand experiences through innovative design and strategic thinking, helping businesses stand out and thrive in today's competitive landscape.</p>
           </div>
-
-          {/* ===================================================
-        TODAY
-        REFERENCE: LOWER RIGHT
-
-        IMPORTANT:
-        This overlays the image/model.
-        It is NOT placed below the hero.
-    =================================================== */}
-
-          <div
-            className="
-        absolute
-        whitespace-nowrap
-        select-none
-        text-charcoal
-        pointer-events-none
-      "
-            style={{
-              right: "15%",
-              bottom: "23%",
-              fontFamily: "Arial, Helvetica, sans-serif",
-              fontSize: "clamp(100px, 8vw, 145px)",
-              fontWeight: 900,
-              lineHeight: "0.76",
-              letterSpacing: "-0.075em",
-              zIndex: 1,
-            }}
-          >
-            TODAY
+          <div className="absolute flex items-center justify-between" style={{ left: "6%", right: "6%", top: "70%", zIndex: 20 }}>
+            <span className="text-charcoal" style={{ fontFamily: "Arial, Helvetica, sans-serif", fontSize: "9px", letterSpacing: "0.14em" }}>SINCE 2014</span>
+            <span className="text-charcoal" style={{ fontFamily: "Arial, Helvetica, sans-serif", fontSize: "9px", letterSpacing: "0.12em" }}>+123 123 1234</span>
           </div>
-
-          {/* ===================================================
-        CIRCULAR SCROLL INDICATOR
-        REFERENCE: BOTTOM RIGHT
-    =================================================== */}
-
-          <div
-            className="
-
-                absolute
-
-                left-[6%]
-
-                top-[75%]
-
-                -translate-y-1/2
-
-                w-[88px]
-
-                h-[88px]
-
-                flex
-
-                items-center
-
-                justify-center
-
-                bg-white/40
-
-                backdrop-blur
-
-                rounded-full
-
-                border
-
-                border-charcoal/10
-
-                shadow-sm
-
-            "
-            style={{
-              zIndex: 25,
-            }}
-          >
-            <svg
-              viewBox="0 0 100 100"
-              className="
-
-                    absolute
-
-                    inset-0
-
-                    w-full
-
-                    h-full
-
-                "
-              aria-hidden="true"
-            >
-              <defs>
-                <path
-                  id="finalHeroCircle"
-                  d="
-
-                            M 50,50
-
-                            m -37,0
-
-                            a 37,37 0 1,1 74,0
-
-                            a 37,37 0 1,1 -74,0
-
-                        "
-                />
-              </defs>
-
-              <text
-                style={{
-                  fill: "#292725",
-
-                  fontFamily: "Arial, Helvetica, sans-serif",
-
-                  fontSize: "6.3px",
-
-                  letterSpacing: "0.18em",
-
-                  opacity: 0.52,
-                }}
-              >
-                <textPath href="#finalHeroCircle" startOffset="0%">
-                  1234 SINCE 2014 1234 SINCE 2014
-                </textPath>
-              </text>
-            </svg>
-
-            <span
-              className="
-
-                    relative
-
-                    text-charcoal
-
-                "
-              style={{
-                fontFamily: "Arial, Helvetica, sans-serif",
-
-                fontSize: "21px",
-
-                fontWeight: 300,
-              }}
-            >
-              ↓
-            </span>
-          </div>
-
-          {/*
-
-          {/* ===================================================
-        CART
-        REFERENCE: BOTTOM LEFT
-    =================================================== */}
-
-          {/* ===================================================
-        MOBILE DESCRIPTION
-    =================================================== */}
-
-          <div
-            className="
-        lg:hidden
-        absolute
-        left-6
-        right-6
-        top-[52%]
-      "
-            style={{
-              zIndex: 20,
-            }}
-          >
-            <p
-              className="
-          max-w-[320px]
-          m-0
-          text-xs
-          leading-[1.6]
-          text-charcoal/75
-        "
-            >
-              Creating impactful brand experiences through innovative design and
-              strategic thinking, helping businesses stand out and thrive in
-              today's competitive landscape.
-            </p>
-          </div>
-
-          {/* ===================================================
-        MOBILE TODAY
-    =================================================== */}
-
-          <div
-            className="
-        lg:hidden
-        absolute
-        left-6
-        bottom-[8%]
-        whitespace-nowrap
-        select-none
-        text-charcoal
-      "
-            style={{
-              fontFamily: "Arial, Helvetica, sans-serif",
-              fontSize: "clamp(65px, 18vw, 105px)",
-              fontWeight: 900,
-              lineHeight: "0.78",
-              letterSpacing: "-0.075em",
-              zIndex: 5,
-            }}
-          >
-            TODAY
+          <div className="absolute whitespace-nowrap select-none pointer-events-none text-charcoal" style={{ left: "38%", bottom: "7%", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "clamp(62px, 18vw, 90px)", fontWeight: 900, lineHeight: "0.76", letterSpacing: "-0.075em", zIndex: 1 }}>TODAY</div>
+          <div className="absolute flex items-center justify-center rounded-full" style={{ left: "6%", bottom: "6%", width: "68px", height: "68px", background: "rgba(255,255,255,0.42)", backdropFilter: "blur(4px)", border: "1px solid rgba(41,39,37,0.10)", zIndex: 25 }}>
+            <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full" aria-hidden="true"><defs><path id="mobileHeroCircle" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" /></defs><text style={{ fill: "#292725", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "6px", letterSpacing: "0.15em", opacity: 0.52 }}><textPath href="#mobileHeroCircle">1234 SINCE 2014 1234 SINCE 2014</textPath></text></svg>
+            <span className="relative text-charcoal" style={{ fontSize: "18px", fontWeight: 300 }}>↓</span>
           </div>
         </div>
       </section>

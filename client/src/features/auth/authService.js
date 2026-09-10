@@ -15,6 +15,11 @@ const login = async (formData) => {
 
 
 
-const authService = { register, login }
+const getMe = async (token) => {
+    const response = await axios.get("/api/auth/me", { headers: { authorization: `Bearer ${token}` } })
+    return response.data
+}
+
+const authService = { register, login, getMe }
 
 export default authService

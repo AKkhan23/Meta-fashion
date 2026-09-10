@@ -36,13 +36,14 @@ const registerUser = async (req, res) => {
     const hashedPassword = bcrypt.hashSync(password, salt)
 
 
-    // Create User 
+    // Create User — locked to 3 credits max
     const user = await User.create({
         name: name,
         email: email,
         phone: phone,
         password: hashedPassword,
-        address: address
+        address: address,
+        credits: 3
     })
 
     if (!user) {
@@ -101,9 +102,15 @@ const generateToken = (id) => {
 }
 
 
+const getMe = async (req, res) => {
+    const user = await User.findById(req.user._id).select("-password")
+    res.json({ _id: user._id, name: user.name, email: user.email, phone: user.phone, address: user.address, isAdmin: user.isAdmin, credits: user.credits })
+}
+
 const authController = {
     registerUser,
-    loginUser
+    loginUser,
+    getMe
 }
 
 export default authController
