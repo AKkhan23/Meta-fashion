@@ -54,6 +54,7 @@ const App = () => {
           <Route path="profile" element={<Profile />} />
         </Route>
         <Route path="/auth/cart" element={<Navigate to="/cart" replace />} />
+        <Route path="/auth/profile" element={<Navigate to="/profile" replace />} />
 
         <Route path="/admin" element={<PrivateAdminComponent />}>
           <Route path="dashboard" element={<Dashboard />} />

@@ -76,14 +76,12 @@ const OrderDetailsModal = ({ handleShowOrder }) => {
                 <div className="border border-gray-200 rounded-xl p-4">
                     <h3 className="font-semibold text-gray-900 mb-3">Payment Method</h3>
                     <div className="flex items-center space-x-3">
-                        <div className="w-12 h-8 bg-gradient-to-r from-amber-500 to-blue-500 rounded flex items-center justify-center">
-                            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                            </svg>
+                        <div className={`w-12 h-8 rounded flex items-center justify-center text-white text-xs font-bold ${myOrder.paymentMethod === 'COD' ? 'bg-green-600' : myOrder.paymentMethod === 'UPI' ? 'bg-blue-600' : 'bg-amber-600'}`}>
+                            {myOrder.paymentMethod || 'COD'}
                         </div>
                         <div>
-                            <p className="text-gray-900 font-medium">Visa ending in 4242</p>
-                            <p className="text-gray-500 text-sm">Expires 12/25</p>
+                            <p className="text-gray-900 font-medium">{myOrder.paymentMethod === 'COD' ? 'Cash on Delivery' : myOrder.paymentMethod === 'UPI' ? 'UPI Payment' : 'Card Payment'}</p>
+                            <p className="text-gray-500 text-sm">{myOrder.paymentMethod === 'COD' ? 'Pay on delivery' : 'Paid online'}</p>
                         </div>
                     </div>
                 </div>

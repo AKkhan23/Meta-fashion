@@ -6,11 +6,15 @@ import Order from "../models/orderModal.js";
 const placeOrder = async (req, res) => {
     const userId = req.user._id;
 
-    let { shippingAddress } = req.body
+    let { shippingAddress, paymentMethod = "COD" } = req.body
 
-    if (!shippingAddress) {
-        res.status(409)
-        throw new Error("Please Provide Shipping Address")
+    if (!shippingAddress || shippingAddress.trim().length < 10) {
+        res.status(400)
+        throw new Error("Please Provide Valid Shipping Address (min 10 chars)")
+    }
+    if (!["COD", "UPI", "Card"].includes(paymentMethod)) {
+        res.status(400)
+        throw new Error("Invalid payment method")
     }
 
     // Find If Coupon Exists
@@ -22,13 +26,19 @@ const placeOrder = async (req, res) => {
 
 
 
-    if (!cart) {
-        res.status(404)
-        throw new Error("Cart not found")
+    if (!cart || !cart.products || cart.products.length === 0) {
+        res.status(400)
+        throw new Error("Cart is empty - add products first")
+    }
+    // Filter null products (deleted)
+    const validProducts = cart.products.filter(p => p.product != null)
+    if (validProducts.length === 0) {
+        res.status(400)
+        throw new Error("Cart is empty - products not available")
     }
 
-    let totalBill = cart.products.reduce((acc, product) => {
-        return acc + product.product.salePrice * product.qty
+    let totalBill = validProducts.reduce((acc, item) => {
+        return acc + item.product.salePrice * item.qty
     }, 0)
 
     // Apply Coupan Discount
@@ -37,11 +47,12 @@ const placeOrder = async (req, res) => {
 
     const order = new Order({
         user: userId,
-        products: cart.products,
+        products: validProducts,
         totalBillAmount: totalBill,
         isDiscounted: couponCode ? true : false,
         coupon: couponCode ? couponCode._id : null,
-        shippingAddress: shippingAddress
+        shippingAddress: shippingAddress,
+        paymentMethod: paymentMethod
     })
 
 

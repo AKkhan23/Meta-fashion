@@ -43,6 +43,12 @@ const orderSchema = new mongoose.Schema({
     shippingAddress: {
         type: String,
         required: [true, "Please Enter Shipping Address"]
+    },
+    paymentMethod: {
+        type: String,
+        enum: ["COD", "UPI", "Card"],
+        default: "COD",
+        required: true
     }
 
 }, {

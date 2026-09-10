@@ -23,6 +23,7 @@ const ProductPage = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { pid } = useParams()
+    const [showRecharge, setShowRecharge] = useState(false)
 
 
 
@@ -60,25 +61,30 @@ const ProductPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
+        if ((user?.credits ?? 0) < 2) {
+            setShowRecharge(true)
+            return
+        }
         const formDataToSend = new FormData()
         formDataToSend.append('person_url', person_url)
         formDataToSend.append('cloth_url', product.image)
         formDataToSend.append('garment_des', product.description)
-
-        // Debug: Check what's in FormData
         for (let pair of formDataToSend.entries()) {
             console.log(pair[0] + ': ', pair[1])
         }
-
         dispatch(tryCloths(formDataToSend))
     }
 
 
 
-    const handleAddToCart = (cartData) => {
-        dispatch(addItemToCart(cartData))
-        navigate("/auth/cart")
+    const handleAddToCart = async (cartData, buyNow = false) => {
+        try {
+            await dispatch(addItemToCart(cartData)).unwrap()
+            toast.success(buyNow ? "Added! Go to checkout" : "Added to cart!", { position: "top-center" })
+            navigate("/cart")
+        } catch (e) {
+            toast.error(e || "Add to cart failed", { position: "top-center" })
+        }
     }
 
 
@@ -103,6 +109,9 @@ const ProductPage = () => {
         }
         if (virtualTryError && virtualTryErrorMessage) {
             toast.error(virtualTryErrorMessage, { position: "top-center" })
+            if (virtualTryErrorMessage.toLowerCase().includes("credit") || virtualTryErrorMessage.toLowerCase().includes("recharge")) {
+                setShowRecharge(true)
+            }
         }
     }, [productError, productErrorMessage, virtualTryError, virtualTryErrorMessage])
 
@@ -130,6 +139,22 @@ const ProductPage = () => {
 
     return (
         <div className="min-h-screen bg-[var(--color-cream)]">
+            {/* Recharge Popup */}
+            {showRecharge && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+                    <div className="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-8 text-center">
+                        <div className="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto mb-4">⚡</div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">Credits Khatam!</h3>
+                        <p className="text-sm text-gray-600 mb-1">Har Virtual Try pe <span className="font-bold text-amber-600">2 credits</span> lagte hain.</p>
+                        <p className="text-sm text-gray-600 mb-1">Aapke paas sirf <span className="font-bold">{user?.credits ?? 0}</span> bacha hai.</p>
+                        <p className="text-xs text-gray-500 mb-6">Naya try karne ke liye recharge karein — admin se contact karein.</p>
+                        <div className="flex gap-3">
+                            <button onClick={() => setShowRecharge(false)} className="flex-1 py-3 rounded-xl border border-gray-200 font-semibold">Band karo</button>
+                            <button onClick={() => { setShowRecharge(false); navigate('/contact'); }} className="flex-1 py-3 rounded-xl bg-amber-600 text-white font-semibold hover:bg-amber-700">Recharge / Contact</button>
+                        </div>
+                    </div>
+                </div>
+            )}
             <div className="max-w-7xl mx-auto px-4 py-6">
                 <nav className="flex flex-wrap items-center gap-2 text-xs tracking-[0.14em] uppercase text-charcoal/40 mb-6">
                     <a href="/" className="hover:text-charcoal">Home</a> <span className="text-[var(--color-gold)]">/</span>
@@ -191,10 +216,10 @@ const ProductPage = () => {
                             </div>
                         </div>
                         <div className="flex gap-3 mb-8">
-                            <button onClick={() => handleAddToCart({ productId: product._id, qty: 1 })} className="cursor-pointer flex-1 border border-charcoal/15 text-charcoal py-4 rounded-xl font-semibold hover:bg-charcoal hover:text-white transition-all">
+                            <button onClick={() => handleAddToCart({ productId: product._id, qty: 1 }, false)} className="cursor-pointer flex-1 border border-charcoal/15 text-charcoal py-4 rounded-xl font-semibold hover:bg-charcoal hover:text-white transition-all">
                                 Add to Cart
                             </button>
-                            <button onClick={() => { handleAddToCart({ productId: product._id, qty: 1 }); navigate("/auth/cart") }} className="cursor-pointer flex-1 bg-[var(--color-gold)] text-white py-4 rounded-xl font-semibold hover:brightness-95 transition-all">
+                            <button onClick={() => handleAddToCart({ productId: product._id, qty: 1 }, true)} className="cursor-pointer flex-1 bg-[var(--color-gold)] text-white py-4 rounded-xl font-semibold hover:brightness-95 transition-all">
                                 Buy Now
                             </button>
                         </div>
@@ -208,7 +233,8 @@ const ProductPage = () => {
                                         </svg>
                                     </div>
                                     <h3 className="text-xl font-bold text-charcoal mb-2">Upload Your Photo for Virtual Try-On</h3>
-                                    <p className="text-sm text-charcoal/60 mb-6">Front-facing photo works best for accurate results</p>
+                                    <p className="text-sm text-charcoal/60 mb-1">Front-facing photo works best for accurate results</p>
+                                    <p className="text-xs font-semibold text-amber-600 bg-white inline-block px-3 py-1 rounded-full border border-amber-200">Cost: 2 credits / try • Your credits: {user?.credits ?? 0}</p>
                                 </div>
 
                                 <div className="bg-white border-2 border-dashed border-[var(--color-gold)]/40 rounded-2xl p-8 mb-4 text-center hover:border-[var(--color-gold)] transition-colors cursor-pointer">
@@ -225,10 +251,11 @@ const ProductPage = () => {
 
 
                                 <div className="flex gap-3">
-                                    <button type='submit' className="flex-1 bg-[var(--color-gold)] text-white py-3.5 rounded-xl font-semibold hover:brightness-95 transition-all shadow-md">
-                                        Upload & Try Virtually
+                                    <button type='submit' disabled={user?.credits < 2} className={`flex-1 py-3.5 rounded-xl font-semibold transition-all shadow-md ${user?.credits < 2 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-[var(--color-gold)] text-white hover:brightness-95'}`}>
+                                        {user?.credits < 2 ? 'Not enough credits (need 2)' : 'Upload & Try Virtually (2 credits)'}
                                     </button>
                                 </div>
+                                {user?.credits < 2 && <p className="text-xs text-red-600 text-center mt-2">Credits khatam — 2 credits lagenge, recharge karein</p>}
                             </div>
                         </form>
 

@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
     },
     credits: {
         type: Number,
-        default: 5,
+        default: 3,
         required: true
     }
 }, {

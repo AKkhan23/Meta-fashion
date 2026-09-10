@@ -40,10 +40,9 @@ const Profile = () => {
         if (!user) {
             navigate("/login")
         } else {
-            // Fetch Orders
             dispatch(getMyOrders())
         }
-    }, [user, dispatch, navigate])
+    }, [user?._id, dispatch])
 
     useEffect(() => {
         if (orderError && orderErrorMessage) {
@@ -103,47 +102,26 @@ const Profile = () => {
 
                     <div className="lg:col-span-2">
                         <div className="bg-white rounded-2xl shadow-md p-6">
-                            <h2 className="text-2xl font-bold text-gray-900 mb-6">My Orders</h2>
-
+                            <h2 className="text-2xl font-bold text-gray-900 mb-6">My Orders ({orders.length})</h2>
                             <div className="space-y-4">
                                 {orders.length === 0 ? (
                                     <p className="text-gray-500 text-sm py-4 text-center">No orders yet.</p>
                                 ) : (
-                                    orders.map(item => {
-                                        return (
+                                    orders.map(item => (
                                             <div key={item._id} className="border border-gray-200 rounded-xl p-4 hover:shadow-md transition-shadow">
-                                                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
-                                                    <div className="mb-2 sm:mb-0">
-                                                        <p className="text-sm text-gray-500">Order ID</p>
-                                                        <p className="font-semibold text-gray-900">#{item._id}</p>
-                                                    </div>
-                                                    <div className="mb-2 sm:mb-0">
-                                                        <p className="text-sm text-gray-500">Date</p>
-                                                        <p className="font-medium text-gray-900">{item.createdAt ? new Date(item.createdAt).toLocaleDateString('en-IN') : '-'}</p>
-                                                    </div>
-                                                    <div className="mb-2 sm:mb-0">
-                                                        <p className="text-sm text-gray-500">Total</p>
-                                                        <p className="font-semibold text-gray-900">₹{item.totalBillAmount}</p>
-                                                    </div>
-                                                    <div className="flex flex-wrap gap-2">
-                                                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                            {item.status}
-                                                        </span>
-                                                    </div>
+                                                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-2">
+                                                    <div><p className="text-xs text-gray-500">Order ID</p><p className="font-semibold text-gray-900 text-sm">#{item._id.slice(-8)}</p></div>
+                                                    <div><p className="text-xs text-gray-500">Date</p><p className="font-medium text-gray-900 text-sm">{item.createdAt ? new Date(item.createdAt).toLocaleDateString('en-IN') : '-'}</p></div>
+                                                    <div><p className="text-xs text-gray-500">Total</p><p className="font-semibold text-gray-900">₹{item.totalBillAmount}</p></div>
+                                                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${item.status==='placed'?'bg-green-100 text-green-800':item.status==='cancelled'?'bg-red-100 text-red-800':'bg-blue-100 text-blue-800'}`}>{item.status} • {item.paymentMethod || 'COD'}</span>
                                                 </div>
+                                                <p className="text-xs text-gray-500 mb-3 truncate">📍 {item.shippingAddress}</p>
                                                 <div className="flex flex-wrap gap-2">
-                                                    <button onClick={() => handleShowOrder(item._id)} className="bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors">
-                                                        View Details
-                                                    </button>
-                                                    {
-                                                        item.status === "placed" && <button onClick={() => handleCancelOrder(item._id)} className="bg-white hover:bg-red-50 text-red-600 border border-red-600 text-sm font-medium py-2 px-4 rounded-lg transition-colors">
-                                                            Cancel Order
-                                                        </button>
-                                                    }
+                                                    <button onClick={() => handleShowOrder(item._id)} className="bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium py-2 px-4 rounded-lg">View Details</button>
+                                                    {item.status === "placed" && <button onClick={() => handleCancelOrder(item._id)} className="bg-white hover:bg-red-50 text-red-600 border border-red-600 text-sm font-medium py-2 px-4 rounded-lg">Cancel Order</button>}
                                                 </div>
                                             </div>
-                                        )
-                                    })
+                                    ))
                                 )}
                             </div>
                         </div>

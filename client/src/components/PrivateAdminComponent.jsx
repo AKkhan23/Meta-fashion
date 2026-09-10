@@ -14,7 +14,7 @@ const PrivateAdminComponent = () => {
         )
     }
 
-    return isAdmin ? <Outlet /> : <Navigate to={"/auth/profile"} />
+    return isAdmin ? <Outlet /> : <Navigate to={"/profile"} />
 
 }
 

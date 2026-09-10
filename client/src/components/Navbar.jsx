@@ -44,7 +44,7 @@ const Navbar = () => {
                     {
                         user ? (<>
                             <div className='flex items-center justify-center space-x-4'>
-                                <Link to={user?.isAdmin ? "/admin/dashboard" : "/auth/profile"} className="hidden sm:flex items-center gap-2 text-xs text-charcoal"><span className="w-7 h-7 rounded-full bg-charcoal/10 grid place-items-center text-xs">👤</span> Welcome {user?.name}</Link>
+                                <Link to={user?.isAdmin ? "/admin/dashboard" : "/profile"} className="hidden sm:flex items-center gap-2 text-xs text-charcoal"><span className="w-7 h-7 rounded-full bg-charcoal/10 grid place-items-center text-xs">👤</span> Welcome {user?.name}</Link>
                                 <button onClick={handleLogout} className="bg-[#e11d48] text-white px-5 py-2 rounded-full text-xs font-semibold hover:bg-red-700 cursor-pointer">Logout</button>
                             </div>
                         </>) : (<Link to={"/login"} className="bg-charcoal text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-black">

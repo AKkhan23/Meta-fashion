@@ -45,7 +45,7 @@ export const virtualTry = async (req, res, next) => {
         }
 
 
-        // Check if user have credits
+        // Check if user have credits (before heavy work)
         let user = await User.findById(req.user._id)
 
         if (!user) {
@@ -53,9 +53,9 @@ export const virtualTry = async (req, res, next) => {
             throw new Error("User not found")
         }
 
-        if (user.credits <= 0 || user.credits == null) {
+        if (user.credits == null || user.credits < 2) {
             res.status(403)
-            throw new Error("Not Enough Credits - please contact admin")
+            throw new Error("Not Enough Credits - 2 credits required per try. Please recharge!")
         }
 
         const input = {
@@ -86,8 +86,16 @@ export const virtualTry = async (req, res, next) => {
             throw new Error(`Replicate returned unexpected output: ${JSON.stringify(output).slice(0, 500)}`)
         }
 
-        // Subtract Credits atomically and return new value
-        const updatedUser = await User.findByIdAndUpdate(user._id, { $inc: { credits: -1 } }, { new: true })
+        // Subtract 2 credits atomically only if >=2 (prevents race condition)
+        const updatedUser = await User.findOneAndUpdate(
+            { _id: user._id, credits: { $gte: 2 } },
+            { $inc: { credits: -2 } },
+            { new: true }
+        )
+        if (!updatedUser) {
+            res.status(403)
+            throw new Error("Not Enough Credits - please contact admin")
+        }
 
 
         res.json({

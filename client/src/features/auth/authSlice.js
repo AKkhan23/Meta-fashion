@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import authService from "./authService";
+import { tryCloths } from "../virtualTry/virtualTrySlice";
 
 
 let userExist = JSON.parse(localStorage.getItem('user'))
@@ -14,9 +15,23 @@ const authSlice = createSlice({
         isError: false,
         message: ""
     },
-    reducers: {},
+    reducers: {
+        setCredits: (state, action) => {
+            if (state.user) {
+                state.user.credits = action.payload
+                localStorage.setItem('user', JSON.stringify(state.user))
+            }
+        }
+    },
     extraReducers: (builder) => {
         builder
+            // Sync credits on virtual try success - 1 credit per try
+            .addCase(tryCloths.fulfilled, (state, action) => {
+                if (state.user && action.payload?.credits !== undefined) {
+                    state.user.credits = action.payload.credits
+                    localStorage.setItem('user', JSON.stringify(state.user))
+                }
+            })
             .addCase(registerUser.pending, (state, action) => {
                 state.isLoading = true
                 state.isSuccess = false
@@ -61,6 +76,8 @@ const authSlice = createSlice({
     }
 })
 
+
+export const { setCredits } = authSlice.actions
 
 export default authSlice.reducer
 
